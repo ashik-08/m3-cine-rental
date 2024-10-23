@@ -36,7 +36,11 @@ const MovieCard = ({ movie }) => {
   return (
     <>
       {showModal && (
-        <MovieDetailsModal movie={selectedMovie} onClose={handleModalClose} />
+        <MovieDetailsModal
+          movie={selectedMovie}
+          onClose={handleModalClose}
+          onAddToCart={handleAddToCart}
+        />
       )}
       <figure
         onClick={handleMovieSelection}
