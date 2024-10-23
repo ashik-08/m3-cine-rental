@@ -1,5 +1,8 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import tag from "../../assets/icons/tag.svg";
+import { MovieContext } from "../../context";
 import { getImgUrl } from "../../utils/cine-utility";
 import MovieDetailsModal from "./MovieDetailsModal";
 import Rating from "./Rating";
@@ -7,6 +10,7 @@ import Rating from "./Rating";
 const MovieCard = ({ movie }) => {
   const [showModal, setShowModal] = useState(false);
   const [selectedMovie, setSelectedMovie] = useState(null);
+  const { cartData, setCartData } = useContext(MovieContext);
 
   const handleModalClose = () => {
     setSelectedMovie(null);
@@ -18,16 +22,27 @@ const MovieCard = ({ movie }) => {
     setShowModal(true);
   };
 
+  const handleAddToCart = (e, movie) => {
+    e.stopPropagation();
+    const existingMovie = cartData.find((item) => item.id === movie.id);
+    if (!existingMovie) {
+      setCartData([...cartData, movie]);
+      toast.success("Movie added to the cart!");
+    } else {
+      toast.warning("This movie is already in the cart!");
+    }
+  };
+
   return (
     <>
       {showModal && (
         <MovieDetailsModal movie={selectedMovie} onClose={handleModalClose} />
       )}
-      <figure className="p-4 border border-black/10 shadow-sm dark:border-white/10 rounded-xl flex flex-col h-full">
-        <div
-          onClick={handleMovieSelection}
-          className="aspect-[2/3] w-full mb-2 sm:mb-4 overflow-hidden rounded-md"
-        >
+      <figure
+        onClick={handleMovieSelection}
+        className="p-4 border border-black/10 shadow-sm dark:border-white/10 rounded-xl flex flex-col h-full"
+      >
+        <div className="aspect-[2/3] w-full mb-2 sm:mb-4 overflow-hidden rounded-md">
           <img
             className="w-full h-full object-contain"
             src={getImgUrl(movie.cover)}
@@ -40,7 +55,10 @@ const MovieCard = ({ movie }) => {
           <div className="flex items-center space-x-1 mb-3 sm:mb-5">
             <Rating value={movie.rating} />
           </div>
-          <button className="bg-primary rounded-lg py-1 sm:py-2 px-3 sm:px-5 flex items-center justify-center gap-2 text-[#171923] font-semibold text-sm">
+          <button
+            onClick={(e) => handleAddToCart(e, movie)}
+            className="bg-primary rounded-lg py-1 sm:py-2 px-3 sm:px-5 flex items-center justify-center gap-2 text-[#171923] font-semibold text-sm"
+          >
             <img src={tag} alt="tag" className="w-4 h-4" />
             <span>${movie.price} | Add to Cart</span>
           </button>
