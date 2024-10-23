@@ -27,9 +27,9 @@ const MovieCard = ({ movie }) => {
     const existingMovie = cartData.find((item) => item.id === movie.id);
     if (!existingMovie) {
       setCartData([...cartData, movie]);
-      toast.success("Movie added to the cart!");
+      toast.success(`${movie.title} added to the cart!`);
     } else {
-      toast.warning("This movie is already in the cart!");
+      toast.warning(`${movie.title} is already in the cart!`);
     }
   };
 
