@@ -5,11 +5,13 @@ import { MovieContext } from "../../context";
 import { getImgUrl } from "../../utils/cine-utility";
 
 const CartDetails = ({ onCancel }) => {
-  const { cartData, setCartData } = useContext(MovieContext);
+  const { state, dispatch } = useContext(MovieContext);
 
   const handleDeleteCartItem = (item) => {
-    const newCartItem = cartData.filter((cartItem) => cartItem.id !== item.id);
-    setCartData(newCartItem);
+    dispatch({
+      type: "REMOVE_FROM_CART",
+      payload: item,
+    });
   };
 
   return (
@@ -20,8 +22,8 @@ const CartDetails = ({ onCancel }) => {
             Your Carts
           </h2>
           <div className="space-y-8 lg:space-y-12 max-h-[450px] overflow-auto mb-10 lg:mb-14">
-            {cartData.length > 0 ? (
-              cartData.map((item) => (
+            {state.cartData.length > 0 ? (
+              state.cartData.map((item) => (
                 <div key={item.id} className="grid grid-cols-[1fr_auto] gap-4">
                   <div className="flex items-center gap-4">
                     <img
@@ -57,7 +59,7 @@ const CartDetails = ({ onCancel }) => {
             )}
           </div>
           <div className="flex items-center justify-end gap-2">
-            {cartData.length > 0 && (
+            {state.cartData.length > 0 && (
               <button className="rounded-md p-2 md:px-4 inline-flex items-center space-x-2 bg-primary text-[#171923] text-sm">
                 <img src={CheckoutIcon} width="24" height="24" alt="checkout" />
                 <span>Checkout</span>

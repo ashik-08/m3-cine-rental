@@ -1,19 +1,20 @@
-import { useState } from "react";
+import { useReducer, useState } from "react";
 import { ToastContainer } from "react-toastify";
 import MovieList from "./components/cine/MovieList";
 import Footer from "./components/Footer";
 import Header from "./components/Header";
 import Sidebar from "./components/Sidebar";
 import { MovieContext, ThemeContext } from "./context";
+import { cartReducer, initialState } from "./reducers/cartReducer";
 
 const App = () => {
-  const [cartData, setCartData] = useState([]);
   const [darkMode, setDarkMode] = useState(false);
+  const [state, dispatch] = useReducer(cartReducer, initialState);
 
   return (
     <>
       <ThemeContext.Provider value={{ darkMode, setDarkMode }}>
-        <MovieContext.Provider value={{ cartData, setCartData }}>
+        <MovieContext.Provider value={{ state, dispatch }}>
           <section className={darkMode ? "dark" : ""}>
             <Header />
             <main>
