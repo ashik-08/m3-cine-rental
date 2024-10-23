@@ -13,7 +13,7 @@ Below is the component structure for CineRental, a fictional movie rental websit
 - **Sidebar**: Categorized movie list (trending, new releases, coming soon, favorites, watch later)
 - **MovieList**: Contains movie collection
 - **MovieCard**: Individual movie details (title, poster, rating, genre)
-- **MovieDetailModal**: Expanded movie information (add to cart, cancel)
+- **MovieDetailsModal**: Expanded movie information (add to cart, cancel)
 - **CartDetails**: Shopping cart
 - **Rating**: User ratings display
 - **Footer**: Copyright message
@@ -22,9 +22,12 @@ Below is the component structure for CineRental, a fictional movie rental websit
 
 - **App** contains **Header**, **Sidebar**, **MovieList**, and **Footer**
 - **MovieList** renders multiple **MovieCard** components
-- Clicking a **MovieCard** displays the **MovieDetailModal**
+- Clicking a **MovieCard** displays the **MovieDetailsModal**
 - "Add to cart" in **MovieCard** updates **CartDetails**
 - **addToCart** function manages cart additions
+- **getImgUrl** function returns cover image url
+- **getAllMovies** function returns all movieData
+- **showCart** function opens cartDetails modal
 
 ## Notes
 
